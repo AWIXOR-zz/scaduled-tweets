@@ -65,7 +65,7 @@ export default ({
 }) => {
 	const signIn = () => {
 		console.log('clicked on sign in');
-		window.open(`${REACT_APP_API_URL}/auth/twitter`, '_self');
+		window.open(`${process.env.REACT_APP_API_URL}/auth/twitter`, '_self');
 	};
 
 	const defaultLinks = [
