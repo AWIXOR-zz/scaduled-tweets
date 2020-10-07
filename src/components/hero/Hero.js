@@ -19,7 +19,7 @@ const Link = tw.a`w-full sm:w-auto text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-
 
 const SecondaryLink = tw(
 	Link
-)`text-gray-700 border-gray-700 hover:bg-gray-100 hover:text-blue-500 hover:border-blue-500`;
+)`text-gray-700 border-gray-700 hover:bg-gray-100 hover:text-blue-500 hover:border-blue-500 cursor-pointer`;
 
 const Actions = styled.div`
 	${tw`relative max-w-md text-center mx-auto lg:mx-0`}
@@ -41,8 +41,13 @@ const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
 export default ({
 	roundedHeaderButton,
 	secondaryLinkText = 'Sign in with Twitter',
-	secondaryLinkUrl = 'http://google.com',
+	secondaryLinkUrl = ``,
+	// secondaryLinkUrl = `${process.env.REACT_APP_API_URL}/auth/twitter`,
 }) => {
+	const signIn = () => {
+		console.log('clicked on sign in');
+		window.open(`${REACT_APP_API_URL}/auth/twitter`, '_self');
+	};
 	return (
 		<>
 			<Container>
@@ -56,10 +61,8 @@ export default ({
 							Write a Tweet, pick a time and you're ready to go! <br></br> Just like
 							that.
 						</Paragraph>
-						<Actions>
-							<SecondaryLink href={secondaryLinkUrl}>
-								{secondaryLinkText}
-							</SecondaryLink>
+						<Actions onClick={signIn}>
+							<SecondaryLink onClick={signIn}>{secondaryLinkText}</SecondaryLink>
 						</Actions>
 					</LeftColumn>
 					<RightColumn>
