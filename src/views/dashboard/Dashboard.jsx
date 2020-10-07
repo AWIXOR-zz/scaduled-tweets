@@ -1,6 +1,6 @@
 import React from 'react';
 import tw from 'twin.macro';
-import SchaduleTweet from './sections/ScheduleTweet';
+import ScheduleTweet from './sections/ScheduleTweet';
 import OldTweets from './sections/OldTweets';
 
 function Dashboard() {
@@ -9,7 +9,7 @@ function Dashboard() {
 
 	return (
 		<div>
-			<SchaduleTweet />
+			<ScheduleTweet />
 			<Divider />
 			{/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
 			<OldTweets
