@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -79,7 +79,8 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 
 export default ({ heading = 'Checkout your Tweets' }) => {
 	const dispatch = useDispatch();
-	const { deleteTweet } = tweetActions;
+
+	// const { tweetActions. } = tweetActions;
 
 	const tweets = useSelector((state) => state.tweets);
 	const tweetsKeys = Object.keys(tweets);
@@ -99,6 +100,49 @@ export default ({ heading = 'Checkout your Tweets' }) => {
 	} else {
 		tweetsToShow.archive = archive;
 	}
+	useEffect(() => {
+		const query = activeTab === 'scheduled' ? 'scheduled' : 'tweeted';
+		// fetch tweets
+		fetch(`${process.env.REACT_APP_API_URL}/tweets?status=${query}`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Credentials': true,
+			},
+		})
+			.then((response) => response.json())
+			.then((tweets) => {
+				console.log(tweets);
+				if (activeTab === 'scheduled') {
+					dispatch(tweetActions.setScheduledTweets(tweets));
+				} else {
+					dispatch(tweetActions.setTweetedTweets(tweets));
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [activeTab]);
+
+	const handleDelete = (id) => {
+		fetch(`${process.env.REACT_APP_API_URL}/tweets/delete?tweetid=${id}`, {
+			method: 'DELETE',
+			credentials: 'include',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Credentials': true,
+			},
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(tweetActions.deleteTweet(id, activeTab));
+				}
+			})
+			.catch((err) => console.log(err));
+	};
 
 	return (
 		<Container>
@@ -110,7 +154,10 @@ export default ({ heading = 'Checkout your Tweets' }) => {
 							<TabControl
 								key={index}
 								active={activeTab === tabName}
-								onClick={() => setActiveTab(tabName)}
+								onClick={() => {
+									console.log('changing tabName state');
+									setActiveTab(tabName);
+								}}
 							>
 								{tabName}
 							</TabControl>
@@ -148,24 +195,22 @@ export default ({ heading = 'Checkout your Tweets' }) => {
 									>
 										<CardHeader>
 											<span className="priceAndDuration">
-												<span className="in">in</span>
-												<span className="number"> {tweet.number}</span>
-												<span className="duration"> {tweet.duration}</span>
+												{/* <span className="in">{tweet.text}</span> */}
+												<span className="number"> {tweet.timeToPost}</span>
+												{/* <span className="duration"> 1</span> */}
 											</span>
 										</CardHeader>
 										<CardText>
-											<CardContent>{tweet.content}</CardContent>
+											<CardContent>{tweet.text}</CardContent>
 											<CardAction>
-												<Link to={`/edit/${tweet.link}`}>
+												<Link to={`/edit/${tweet._id}`}>
 													<EditButton>
 														<span className="playIconContainer">
 															<EditIcon className="editIcon" />
 														</span>
 													</EditButton>
 												</Link>
-												<DeleteButton
-													onClick={() => dispatch(deleteTweet(tweet.id, activeTab))}
-												>
+												<DeleteButton onClick={() => handleDelete(tweet._id)}>
 													<span className="playIconContainer">
 														<DeleteIcon className="editIcon" />
 													</span>
