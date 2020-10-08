@@ -254,12 +254,34 @@ const calculateTime = (timeToPost) => {
   const now = new moment();
   let tweet = {};
   const diff = moment.duration(now.diff(timeToPost));
-  if (diff._data.days === 0 && diff._data.hours !== 0) {
+  console.log(diff._data);
+  if (diff._data.years === 0 && diff._data.months !== 0) {
+    tweet = {
+      number: Math.abs(diff._data.months),
+      duration: "months",
+    };
+    return (
+      <>
+        <span className="number">{tweet.number}</span>
+        <span className="duration"> {tweet.duration}</span>
+      </>
+    );
+  } else if (diff._data.months === 0 && diff._data.days !== 0) {
+    tweet = {
+      number: Math.abs(diff._data.days),
+      duration: "days",
+    };
+    return (
+      <>
+        <span className="number">{tweet.number}</span>
+        <span className="duration"> {tweet.duration}</span>
+      </>
+    );
+  } else if (diff._data.days === 0 && diff._data.hours !== 0) {
     tweet = {
       number: Math.abs(diff._data.hours),
       duration: "hours",
     };
-
     return (
       <>
         <span className="number">{tweet.number}</span>
@@ -277,10 +299,10 @@ const calculateTime = (timeToPost) => {
         <span className="duration"> {tweet.duration}</span>
       </>
     );
-  } else {
+  } else if (diff._data.years !== 0) {
     tweet = {
-      number: Math.abs(diff._data.days),
-      duration: "days",
+      number: Math.abs(diff._data.years),
+      duration: "years",
     };
     return (
       <>
