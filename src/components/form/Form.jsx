@@ -73,38 +73,7 @@ export default ({ tweetCont, tweetTime }) => {
   };
   const handleSchedule = (e) => {
     e.preventDefault();
-    const now = new moment();
-    let tweet = {};
-    const diff = moment.duration(now.diff(time));
-    let date = new Date();
-    // if (diff._data.days === 0 && diff._data.hours !== 0) {
-    // 	tweet = {
-    // 		id: date.getTime(),
-    // 		link: date.getTime(),
-    // 		content: tweetContent,
-    // 		time: time,
-    // 		number: Math.abs(diff._data.hours),
-    // 		duration: 'hours',
-    // 	};
-    // } else if (diff._data.hours === 0) {
-    // 	tweet = {
-    // 		id: date.getTime(),
-    // 		link: date.getTime(),
-    // 		content: tweetContent,
-    // 		time: time,
-    // 		number: Math.abs(diff._data.seconds),
-    // 		duration: 'seconds',
-    // 	};
-    // } else {
-    // 	tweet = {
-    // 		id: date.getTime(),
-    // 		link: date.getTime(),
-    // 		content: tweetContent,
-    // 		time: time,
-    // 		number: Math.abs(diff._data.days),
-    // 		duration: 'days',
-    // 	};
-    // }
+
     console.log({
       text: tweetContent,
       timeToPost: time,
@@ -159,6 +128,7 @@ export default ({ tweetCont, tweetTime }) => {
                     name="tweetContent"
                     required
                     maxLength={280}
+                    value={tweetCont}
                     placeholder={tweetContent}
                   />
                 </InputContainer>
