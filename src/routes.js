@@ -7,6 +7,7 @@ import { DefaultLayout, SimpleLayout } from "./layouts";
 // Route Views
 import Dashboard from "./views/dashboard/Dashboard";
 import First from "./views/home/home";
+import AddTweet from "./views/add-tweet/AddTweet";
 import Edit from "./views/edit/Edit";
 export default {
   LoggedIn: [
@@ -47,7 +48,12 @@ export default {
       component: Dashboard,
     },
     {
-      path: "/edit",
+      path: "/add",
+      layout: DefaultLayout,
+      component: AddTweet,
+    },
+    {
+      path: "/edit/:id",
       layout: DefaultLayout,
       component: Edit,
     },
