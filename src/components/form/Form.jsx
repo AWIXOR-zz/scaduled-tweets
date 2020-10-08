@@ -55,10 +55,7 @@ const BackButton = styled.button`
 `;
 
 export default ({ tweetCont, tweetTime }) => {
-  // tweetCont?tweetCont:
-  const [tweetContent, setTweetContent] = useState(
-    tweetCont ? tweetCont : "Tweet content here"
-  );
+  const [tweetContent, setTweetContent] = useState(tweetCont ? tweetCont : "");
   const [time, setTime] = useState(
     tweetTime ? tweetTime : new moment().format()
   );
@@ -128,8 +125,8 @@ export default ({ tweetCont, tweetTime }) => {
                     name="tweetContent"
                     required
                     maxLength={280}
-                    value={tweetCont}
-                    placeholder={tweetContent}
+                    value={tweetContent}
+                    placeholder={tweetCont ? null : "Tweet content here"}
                   />
                 </InputContainer>
               </TwoColumn>
