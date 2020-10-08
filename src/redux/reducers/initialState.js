@@ -1,5 +1,7 @@
 export default {
-	auth: {},
+	auth: {
+		user: {},
+	},
 
 	tweets: {
 		scheduled: [
